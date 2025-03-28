@@ -1,6 +1,6 @@
 package lv.venta.service;
 
-import java.lang.annotation.ElementType;
+
 import java.util.ArrayList;
 
 import lv.venta.model.Professor;
