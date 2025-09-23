@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+import lv.venta.model.enums.Degree;
 import jakarta.persistence.OneToOne;
 
 @Getter
@@ -24,12 +24,11 @@ import jakarta.persistence.OneToOne;
 @Table(name = "ProfessorTable") //MYSQL - professor_table
 @Entity
 public class Professor {
-
 	@Setter(value = AccessLevel.NONE)
 	@Id
 	@Column(name = "PId")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int pId;
+	private int pid;
 	
 	@NotNull
 	@Pattern(regexp = "[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]+")

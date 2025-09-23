@@ -6,8 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import lv.venta.model.Student;
 
-public interface IStudentRepo extends CrudRepository<Student, Integer> {
+public interface IStudentRepo extends CrudRepository<Student, Integer>{
 
-	public abstract ArrayList<Student> findByGradeGrvalueLessThan(int i);
+	public abstract	ArrayList<Student> findByGradesGrvalueLessThan(int i);
 
 }

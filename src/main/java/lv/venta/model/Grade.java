@@ -20,29 +20,29 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "GradeTable") // MYSQL - grade_table
+@Table(name = "GradeTable") //MYSQL - grade_table
 @Entity
 public class Grade {
-
 	@Setter(value = AccessLevel.NONE)
 	@Id
 	@Column(name = "GId")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int gId;
-
+	private int gid;
+	
 	@Column(name = "Grvalue")
 	@Min(1)
 	@Max(10)
 	private int grvalue;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "StId")
+	@JoinColumn(name = "Stid")
 	private Student student;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "CId")
 	private Course course;
-
+	
+	
 	public Grade(int grvalue, Student student, Course course) {
 		setGrvalue(grvalue);
 		setStudent(student);

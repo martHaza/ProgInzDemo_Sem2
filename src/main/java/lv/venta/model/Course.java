@@ -27,34 +27,35 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "CourseTable") // MYSQL - course_table
+@Table(name = "CourseTable") //MYSQL - course_table
 @Entity
 public class Course {
-
 	@Setter(value = AccessLevel.NONE)
 	@Id
 	@Column(name = "CId")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int cId;
-
+	private int cid;
+	
 	@Column(name = "Title")
 	@NotNull
 	@Pattern(regexp = "[A-ZĒŪĪĻĶĢŠĀČŅa-zēūīļķģšāžčņ ]+")
 	@Size(min = 4, max = 50)
 	private String title;
-
+	
 	@Column(name = "Creditpoints")
 	@Min(0)
 	@Max(30)
 	private int creditpoints;
-
+	
 	@OneToOne
-	@JoinColumn(name = "PId") // izveidos kursa tabulā papildus kolonu PiD, kas sasaistīs profesoru ar kursu
+	@JoinColumn(name = "PId")//izveidos kursa tabulā papildus kolonu PiD, kas sasaistīs profesoru ar kursu
 	private Professor professor;
-
+	
 	@OneToMany(mappedBy = "course")
 	@ToString.Exclude
 	private Collection<Grade> grades;
+	
+	
 
 	public Course(String title, int creditpoints, Professor professor) {
 		setTitle(title);

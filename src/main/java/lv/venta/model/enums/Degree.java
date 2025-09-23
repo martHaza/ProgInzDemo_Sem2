@@ -1,6 +1,7 @@
-package lv.venta.model;
+package lv.venta.model.enums;
 
 public enum Degree {
 
 	bakalaura, magistra, doktora, cits
+	
 }

@@ -25,32 +25,31 @@ import lombok.ToString;
 @Table(name = "StudentTable")//MYSQL - student_table
 @Entity
 public class Student {
-
 	@Setter(value = AccessLevel.NONE)
 	@Id
-	@Column(name = "StId")
+	@Column(name = "Stid")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int stId;
-
+	private int stid;
+	
 	@NotNull
 	@Pattern(regexp = "[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]+")
 	@Size(min = 3, max = 20)
 	@Column(name = "Name")
 	private String name;
-
+	
 	@NotNull
 	@Pattern(regexp = "[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]+")
 	@Size(min = 3, max = 25)
 	@Column(name = "Surname")
 	private String surname;
-
+	
 	@OneToMany(mappedBy = "student")
 	@ToString.Exclude
 	private Collection<Grade> grades;
-
-
-public Student(String name, String surname) {
-	setName(name);
-	setSurname(surname);
-}
+	
+	
+	public Student(String name, String surname) {
+		setName(name);
+		setSurname(surname);
+	}
 }
