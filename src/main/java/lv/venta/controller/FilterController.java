@@ -3,6 +3,8 @@ package lv.venta.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import lv.venta.model.Professor;
 import lv.venta.model.Student;
 import lv.venta.model.enums.Degree;
 import lv.venta.service.IFilterService;
+import lv.venta.service.IUserService;
 
 @Controller
 @RequestMapping("/filter")
@@ -22,6 +25,9 @@ public class FilterController {
 
 	@Autowired
 	private IFilterService filtService;
+	
+	@Autowired
+	private IUserService userService;
 	
 	@GetMapping("/grades/student/{id}")//localhost:8080/filter/grades/student/1
 	public String getControllerGetAllGradesForStudent(@PathVariable (name = "id") int id, Model model)
@@ -37,21 +43,29 @@ public class FilterController {
 		}
 	}
 
-	@GetMapping("/courses/student/{id}")//localhost:8080/filter/courses/student/1
-	public String getControllerGetAllCoursesForStudent(@PathVariable(name = "id") int id, Model model)
-	{
-		try
-		{
-			ArrayList<Course> filteredCourses = filtService.selectCoursesByStudentId(id);
-			model.addAttribute("package", filteredCourses);
-			return "show-courses-page";//parādīs show-courses-page.html lapu ar izfiltrētime kursiem
-		}
-		catch (Exception e) {
-			model.addAttribute("package", e.getMessage());
-			return "show-error-page";//parādīt show-error-page.html lapu, kura būs kļudas ziņojums
+	@GetMapping("/courses/student/{id}") // localhost:8080/filter/courses/student/1
+	public String getControllerGetAllCoursesForStudent(@PathVariable(name = "id") int id, Model model) {
+		//Nosakidrojam, kurs lieottajs ir ienācis sistēmā un so endpointu lieto
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//no lietotaja lietotājvāŗda noskaidro viņa id
+		int userID = userService.getUserIdFromUsername(auth.getName());
+		//tikai tad, ja lietotaja id sakrīt ar skatāmo studenta id, tad rādam viņa kursus
+		if (userID == id) {
 
+			try {
+				ArrayList<Course> filteredCourses = filtService.selectCoursesByStudentId(id);
+				model.addAttribute("package", filteredCourses);
+				return "show-courses-page";// parādīs show-courses-page.html lapu ar izfiltrētime kursiem
+			} catch (Exception e) {
+				model.addAttribute("package", e.getMessage());
+				return "show-error-page";// parādīt show-error-page.html lapu, kura būs kļudas ziņojums
+			}
 		}
-		
+		else {
+			model.addAttribute("package", "Studentam ar id " + userID + "  nav piekļuve pie cita studenta datiem");
+			return "show-error-page";
+		}
+
 	}
 	@GetMapping("/courses/professor/{id}")//localhost:8080/filter/courses/professor/1
 	public String getControllerGetAllCoursesForprofessor(@PathVariable(name = "id") int id, Model model)
