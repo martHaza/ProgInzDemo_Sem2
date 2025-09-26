@@ -9,6 +9,7 @@ import lv.venta.model.Course;
 import lv.venta.model.Grade;
 import lv.venta.model.Professor;
 import lv.venta.model.Student;
+import lv.venta.model.dto.CourseInfoDTO;
 import lv.venta.model.dto.GradeInfoDTO;
 import lv.venta.model.enums.Degree;
 import lv.venta.repo.ICourseRepo;
