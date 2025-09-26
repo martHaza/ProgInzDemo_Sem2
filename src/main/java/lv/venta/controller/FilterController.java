@@ -16,6 +16,7 @@ import lv.venta.model.Course;
 import lv.venta.model.Grade;
 import lv.venta.model.Professor;
 import lv.venta.model.Student;
+import lv.venta.model.dto.GradeInfoDTO;
 import lv.venta.model.enums.Degree;
 import lv.venta.service.IFilterService;
 
@@ -29,8 +30,8 @@ public class FilterController {
 	@GetMapping("/grades/student/{id}")//localhost:8080/filter/grades/student/1
 	public ResponseEntity<?> getControllerGetAllGradesForStudent(@PathVariable (name = "id") int id) {
 		try {
-			ArrayList<Grade> filteredGrades = filtService.selectGradesByStudentId(id);
-			ResponseEntity<ArrayList<Grade>> response = new ResponseEntity<ArrayList<Grade>>(filteredGrades, HttpStatusCode.valueOf(200));
+			ArrayList<GradeInfoDTO> filteredGrades = filtService.selectGradesByStudentId(id);
+			ResponseEntity<ArrayList<GradeInfoDTO>> response = new ResponseEntity<ArrayList<GradeInfoDTO>>(filteredGrades, HttpStatusCode.valueOf(200));
 			return response;
 		}catch (Exception e) {
 			ResponseEntity<String> response = new ResponseEntity<String>(e.getMessage(), HttpStatusCode.valueOf(500));
