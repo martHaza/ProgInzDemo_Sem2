@@ -49,7 +49,19 @@ public class Student {
 	
 	
 	public Student(String name, String surname) {
-		setName(name);
-		setSurname(surname);
+		if(name != null) {
+			if(name.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]+")) {
+			setName(name);
+			}
+		} else {
+			name = "";
+		}
+		if(surname != null) {
+			if(surname.matches("[A-ZĒŪĪĻĶĢŠĀČŅ]{1}[a-zēūīļķģšāžčņ]+")) {
+				setSurname(surname);
+			}
+		} else {
+			surname = "";
+		}
 	}
 }
